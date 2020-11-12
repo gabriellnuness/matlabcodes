@@ -2,7 +2,8 @@
 % V = signal to be analyzed
 % t = time array
 % c = plot color in the format rbg [0-1,0-1,0-1]
-function fft_plot(V,t,c)
+
+function fft_plot(t,V,c)
 N = length(V);
 Ts = t(2)-t(1);
 fs = 1/Ts;
@@ -19,5 +20,5 @@ f=fs*(0:(N/2))/N;
 % plot(f,mag2db(P1)) %in decibels
 % figure
 plot (f,P1,'.-','MarkerSize',10,'Color',c)
-xlim([-10 300])
+% xlim([-10 300])
 end
