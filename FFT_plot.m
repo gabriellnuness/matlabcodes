@@ -1,9 +1,17 @@
 %%  FFT function to compare frequency of input signal x output signal
+% fft_plot(t,V,log,c)
 % V = signal to be analyzed
 % t = time array
-% c = plot color in the format rbg [0-1,0-1,0-1]
+% log = plot logaritmic scale when log=1.
+% c [optional] = plot color in the format rbg [0-1,0-1,0-1]
 
-function fft_plot(t,V,c)
+function fft_plot(t,V,log,c)
+%optional param c
+if ~exist('c','var')
+ % third parameter does not exist, so default it to something
+  c = [0.3,0.3,0.3];
+end
+
 N = length(V);
 Ts = t(2)-t(1);
 fs = 1/Ts;
@@ -16,9 +24,12 @@ P1 = P2(1:N/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
 f=fs*(0:(N/2))/N;
 
-% figure
-% plot(f,mag2db(P1)) %in decibels
-% figure
-plot (f,P1,'.-','MarkerSize',10,'Color',c)
-% xlim([-10 300])
+if log == 1
+    % figure
+    plot(f,mag2db(P1)) %in decibels
+else
+    % figure
+    plot (f,P1,'.-','MarkerSize',10,'Color',c)
+end
+
 end
