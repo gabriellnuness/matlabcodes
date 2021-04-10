@@ -77,7 +77,7 @@ currentDeriv = diff(current);
 firstDeriv = powerDeriv./currentDeriv; %slope
 secDeriv = diff(firstDeriv); % threshold
 [val,threshold] = max(secDeriv);
-threshold = threshold + 1; %because the derivative does not have the first number
+threshold = threshold + 1 %because the derivative does not have the first number
 
 yyaxis left
 plot(current,power,'k')
