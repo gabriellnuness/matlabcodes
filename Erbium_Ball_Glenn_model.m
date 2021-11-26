@@ -50,6 +50,7 @@ Iz = I.*alpha;
 Pz = Pin.*alpha;
 
 G = exp(alpha); % amplifier Gain -- ref[1998-Qian_Li]
+G = Pz./Pin;
 
 %% Acquire experimental data
 % the easiest way to achieve this is to run the ER30, M12 and M5 code
@@ -91,7 +92,7 @@ plot(I*area*10^3, G,'color',c,'linewidth',1.5) % G or alpha
 xlabel('Input power [mW]','interpreter','latex')
 ylabel('Amplifier gain (G)','interpreter','latex')
 grid
-xlim([0 5.3])
+% xlim([0 5.3])
 % review this part: gain coefficient(g) or amplifier gain (G)?
 
 
@@ -187,41 +188,4 @@ xlim([0 5.3])
 
 
 
-
-%% Save figures
-path = 'D:\Users\Stinky\Google Drive\ITA\Data\3 - Erbium-doped fibers characterization\data'
-cd(path)
-if ~exist('plots', 'dir')
-    mkdir('plots')
-end
-
-plot_path = [path,'\plots']
-cd(plot_path)
-
-size = [width  height]; %cm
-paperunits='centimeters';
-
-figHandles = findall(0,'Type','figure'); 
- 
-% Loop through figures 2:end
-for i = 1:numel(figHandles)
-    
-    set(figHandles(i),'paperunits',paperunits,'paperposition',[0 0 size]);
-    set(figHandles(i), 'PaperSize', size);
-    
-    print(figHandles(i), [figHandles(i).Name,'.pdf'],'-dpdf')
-    print(figHandles(i), [figHandles(i).Name,'.eps'],'-depsc')
-    print(figHandles(i), [figHandles(i).Name,'.png'],'-dpng')
-
-end
-
-
-
-
-
-
-
-
-
-
-
+save_open_fig('D:\Users\stinky\desktop\', [10 10], 3)
