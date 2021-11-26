@@ -1,8 +1,11 @@
-%%  FFT function to compare frequency of input signal x output signal
-% fft_plot(t,V,log,c)
+%  FFT function to compare frequency of input signal x output signal
+% 
+% fft_plot(t,V,log_scale,c)
+%
 % V = signal to be analyzed
 % t = time array
-% log = plot logaritmic scale when log=1.
+% log_scale: 0 - linear
+%            1 - logarithmic
 % c [optional] = plot color in the format rbg [0-1,0-1,0-1]
 
 function FFT_plot(t,V,log,c)
@@ -58,4 +61,3 @@ plot(f(TF),X(TF),'.','MarkerSize',10,'Color',belize)
 legend('FFT', ['f [Hz] = ',num2str(f(TF))])
 
 end
-
