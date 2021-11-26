@@ -34,7 +34,7 @@ lin = pi/2 - t;
 % plot(-pi/2,offset+cos(pi/2),'ok')
 % plot(-3*pi/2,offset+cos(pi/2),'ok')
 p4 = plot(t,lin,'--','Color',belize,'linewidth',1.2); 
-p3 = plot(pi/6,offset+cos(pi/6),'.','MarkerSize',15,'Color',carrot);
+p3 = plot(pi/6,offset+cos(pi/6),'*','MarkerSize',5,'Color',carrot);
 p2 = plot(pi/2,offset+cos(pi/2),'.k','MarkerSize',15);
 lin = pi/2 - t;
 % p4 = plot(t,lin,'r','linewidth',1.5);
@@ -50,9 +50,3 @@ set(gca,'xticklabel',{'$\pi/2$','$\pi$','$3\pi/2$','$2\pi$'})
 set(gca,'fontsize',axes_fontsize)
 set(gca,'box','on')
 grid 
-
-
-save_folder = 'D:\Users\Stinky\Google Drive\ITA\Dissertation\1 - Dissertation\Cap2'
-cd(save_folder)
-print(gcf,'quadrature3.eps','-depsc')
-print(gcf,'quadrature3.pdf','-dpdf')
