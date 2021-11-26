@@ -6,9 +6,13 @@ function save_open_fig(path, fig_size, ext)
 % ext:    1 - pdf
 %         2 - eps
 %         3 - png
-%         4 - ALL 
+%         4 - ALL FORMATS
+%         5 - DO NOT SAVE
 %
 % save_open_fig(path, fig_size, format)
+    if ext == 5
+        fprintf('Figures were NOT saved!\n')
+    return 
 
     paperunits='centimeters';
     plot_path = [path,'\plots']
