@@ -1,35 +1,27 @@
-%%  FFT function to compare frequency of input signal x output signal
-% fft_plot(t,V,log,c)
-% V = signal to be analyzed
+function FFT_plot_prominence(t, V, c, prom)
+% This function converts a time based signal to a frequency domain by doing a FFT
+% With options to select most prominent peaks in frequency, to change plot color and to change y scale to log.
+% 
+% fft_plot(t, V, log_scale, color, prominent_peaks)
+%
+% V = input signal
 % t = time array
-% log = plot logaritmic scale when log=1.
-% c [optional] = plot color in the format rbg [0-1,0-1,0-1]
+% c = [0-1,0-1,0-1]
 
-function fft_plot(t,V,log,c)
-%optional param c
-if ~exist('c','var')
- % third parameter does not exist, so default it to something
-  c = [0.3,0.3,0.3];
-end
+    % Constants
+    prom_value = 4/100;
+    belize = [41/255 128/255 185/255];
+    
+    % Calculating FFT spectrum with fft_calc.m
+    [f, P1] = fft_calc(t,V);
 
-N = length(V);
-Ts = t(2)-t(1);
-fs = 1/Ts;
-fN = fs/2;
-tt=(0:N-1)*Ts;
-
-fft1 = fft(V);
-P2 = abs(fft1/N);
-P1 = P2(1:N/2+1);
-P1(2:end-1) = 2*P1(2:end-1);
-f=fs*(0:(N/2))/N;
-
-if log == 1
-    % figure
-    plot(f,mag2db(P1)) %in decibels
-else
-    % figure
-    plot (f,P1,'.-','MarkerSize',10,'Color',c)
-end
-
+    % Placing data tip in local max values
+    TF = islocalmax(P1,'MinProminence', prom_value); % local max is more representative than just sorting maximum values
+    
+    plot(f,P1,'-','MarkerSize',10,'Color', c) ;        
+    if prom == 1
+        hold on
+        plot(f(TF),P1(TF),'.','MarkerSize',10,'Color',belize)
+            legend('FFT', ['f [Hz] = ',num2str(f(TF))])
+    end
 end
