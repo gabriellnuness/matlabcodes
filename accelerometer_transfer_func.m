@@ -43,51 +43,6 @@ figure
 	title('ramp')
 
 %% acquiring damping factor and resonance frequency from output
+
 % Using Alan's script
-[fs,as] = parametros(inp_impulse,inp_impulse)
-
-
-
-
-function [fs,as] = parametros(vs,t)
-% Function from Alan's dissertation entitled:
-% INTERFEROMETRO OPTICO EM MALHA FECHADA COM DUAS POLARIZACOES PARA APLICACOES ESPACIAIS (2019), ITA.
-%
-% The function takes the frequency and the exponential decay of an impulse response signal of a damped accelerometer.
-
-	vs=vs-mean(vs);
-	%dominiodafrequencia
-	vf=abs(2*fft(vs)/length(vs));%amplitudes
-	f=(0:length(vs)-1)./(max(t)-min(t));%frequencias
-	vf=vf(1:round(length(vs)/2));
-	f=f(1:round(length(vs)/2));
-	%frequenciadepico
-	[~,p]=max(vf);
-	%encontrar minimos laterais(limites para calculo da media)
-	p1=p(1);
-	p2=p(1);
-	aux=0.5*max(vf);
-	while vf(p1)>aux&&p1>1%lado esquerdo
-		p1=p1-1;
-	end
-
-	while vf(p2)>aux&&p2<length(f)%lado direito
-		p2=p2+1;
-	end
-	%encontrar frequencia central
-	fs=trapz(f(p1:p2),f(p1:p2).*vf(p1:p2))/trapz(f(p1:p2),vf(p1:p2));
-	%valores de pico
-	[~,p1]=findpeaks(vs,'MinPeakHeight',0);
-	[~,p2]=findpeaks(-vs,'MinPeakHeight',0);
-	while length(p1)>length(p2)
-		p1=p1(1:end-1);
-	end
-	while length(p1)<length(p2)
-		p2=p2(1:end-1);
-	end
-	vpp=vs(p1)-vs(p2);
-	tpp=t(p1);
-	%identificar decaimento
-	pol=polyfit(tpp,log(vpp),1);
-	as=real(pol(1));
-end
+[fs,as] = alan_dissertation_function(inp_impulse,inp_impulse)
