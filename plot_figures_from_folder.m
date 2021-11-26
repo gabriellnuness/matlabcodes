@@ -3,12 +3,10 @@
 % are in the same folder, with extension .csv collected by labVIEW VI.
 % Therefore, there must not be any other csv file inside folder.
 
+save_figures_status = 5;
+
 set(groot,'defaultAxesTickLabelInterpreter','latex')
 set(groot,'defaultLegendInterpreter','latex')
-
-clear all
-close all
-clc
 
 initial_path = pwd;
 
@@ -92,7 +90,7 @@ end
 
 %% save files to folder
 cd(initial_path)
-save_open_fig(selpath, [30 col*5], 3) 
+save_open_fig(selpath, [30 col*5], save_figures_status) 
    
    
    
