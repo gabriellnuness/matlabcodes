@@ -1,4 +1,4 @@
-function FFT_plot_prominence(t, V, c, prom)
+function fft_plot(t, V, c, prom)
 % This function converts a time based signal to a frequency domain by doing a FFT
 % With options to select most prominent peaks in frequency, to change plot color and to change y scale to log.
 % 
@@ -22,6 +22,6 @@ function FFT_plot_prominence(t, V, c, prom)
     if prom == 1
         hold on
         plot(f(TF),P1(TF),'.','MarkerSize',10,'Color',belize)
-            legend('FFT', ['f [Hz] = ',num2str(f(TF))])
+            legend('FFT', ['f [Hz] = ', num2str(f(TF))])
     end
 end
