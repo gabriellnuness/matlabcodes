@@ -1,87 +1,73 @@
-% Trying to calculate how much phase-delay is acceptable to stay
-% in the linear region of the cosine curve
+% Script to calculate the maximum amplitude in radians is acceptable to stay
+% in the linear region of the cosine curve given a total harmonic distortion arbitrary value
+% MATLAB r2019b
+% author: Gabriel Nunes
+
 
 clear all
 close all
 clc
 
+% Constants
+thd_lim = 3; % maximum desired THD value
 t = 0:0.0001:2*pi;
-
-I = cos(t);
-line = -1*t + pi/2;
-Q = [0 pi/2];
-
-
-
-
-
-f = 10;    %freq of signal
+Q = [0 pi/2]; 
+f = 10;    % signal frequenct
 w = 2*pi*f;
-% A = pi/2;  %desired value to be found to THD = 3%
 
+% Functions to plot
+I = cos(t); % interferometer
+line = -1*t + pi/2; % tangent line to pi/2
 
-%finding A for THD threshold
+% Finding A for THD threshold
 harmonic_dist = 0;  
-A = 0;
-while harmonic_dist <= 3
-    
-    signal = A*sin(w*t) + pi/2;
-    interf = cos(signal);
-
-%     harmonic_dist = db2mag(thd(interf))*100;
+A = 0; % input signal amplitude
+while harmonic_dist <= thd_lim
+    signal = A*sin(w*t) + pi/2; % input signal
+    interf = cos(signal); % output signal
     harmonic_dist = 100*(10^(thd(interf,1/0.0001,10)/20));
-    
     A = A + 0.001; %increment
 end
-A
-harmonic_dist
-signal_dist = 100*(10^(thd(signal,1/0.0001,10)/20))
+signal_dist = 100*(10^(thd(signal,1/0.0001,10)/20));
 
+fprintf('The input signal THD was: %.1f %%\n', signal_dist)
+fprintf('The signal amplitude to reach a THD = %.1f %% is: %.2f [rad]\n', harmonic_dist, A)
 
-% Error calculation to tangent line
+% Error in relation to the quadrature tangent line 
 xx = pi/2 - A;
 int = cos(xx);
-l = -xx +pi/2;
-error_100 = (int - l )/l  *100
+tan_line = -xx + pi/2;
+error_100 = (int - tan_line)/tan_line * 100;
 
-%% plot
+fprintf('The error in relation to the tangent line is: %.1f %%\n', error_100)
 
-figure('Units','centimeter','Position',[10 0 30 25],...
+% Plot
+figure('Units','centimeter','Position',[0 1 20 15],...
     'PaperPositionMode','auto')
-
-subplot(2,2,1)
-    plot(t,I)
-    hold on
-    plot(t,line,'--')
-    plot(Q(2),Q(1),'k*')
-    plot(signal, t -1.2)
-    ylim([-1.2 1.2])
-    % clear line
-    % x = [-A+pi/2 +A+pi/2];
-    % y = [0 0];
-    % line(x,y)
-    grid
-
-subplot(2,2,2)
-    plot(t,interf)
-    ylim([-1.2 1.2])
-    xlim([0 10*1/f])
-    grid
-
-subplot(2,2,3)
-    thd(signal,1/0.0001,10);
-    xlim([0 150/1000])
-
-subplot(2,2,4)
-    thd(interf,1/0.0001,10);
-    xlim([0 150/1000])
-
-% 
-% figure
-% x = [-A+pi/2 +A+pi/2];
-% y = [0 0];
-% line(x,y)
-
-
-
-
+    subplot(2,2,1)
+        hold on
+        plot(t,I)
+        plot(t,line,'--')
+        plot(Q(2),Q(1),'k*')
+        plot(signal, t -1.2)
+            ylim([-1.2 1.2])
+            title('Interferogram')
+            xlabel('Phase [rad]')
+            ylabel('Intensity [u.a.]')
+            grid
+    subplot(2,2,2)
+        plot(t,interf)
+            ylim([-1.2 1.2])
+            xlim([0 10*1/f])
+            xlabel('Time [s]')
+            ylabel('Intensity [u.a.]')
+            title('Interferometer output')
+            grid
+    subplot(2,2,3)
+        thd(signal,1/0.0001,10);
+        xlim([0 150/1000])
+        title('THD input signal')
+    subplot(2,2,4)
+        thd(interf,1/0.0001,10);
+            xlim([0 150/1000])
+            title('THD interferometer')
