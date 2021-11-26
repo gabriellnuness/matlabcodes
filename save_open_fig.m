@@ -1,14 +1,14 @@
-function save_open_fig(path, size, ext)
+function save_open_fig(path, fig_size, ext)
 % This function saves all the opened figures at the moment in MATLAB and saves in the indicated folder, inside a 'plots' folder.
 % The name of each file is the name of the figure define in: figure('name','...')
 % path: 'D:\Users\...'
-% size: [width  height]
+% fig_size: [width  height]
 % ext:    1 - pdf
 %         2 - eps
 %         3 - png
 %         4 - ALL 
 %
-% save_open_fig(path, size, format)
+% save_open_fig(path, fig_size, format)
 
     paperunits='centimeters';
     plot_path = [path,'\plots']
@@ -24,8 +24,8 @@ function save_open_fig(path, size, ext)
     cd(plot_path)
          
     for i = 1:numel(figHandles)
-        set(figHandles(i),'paperunits', paperunits, 'paperposition', [0 0 size]);
-        set(figHandles(i), 'PaperSize', size);
+        set(figHandles(i),'paperunits', paperunits, 'paperposition', [0 0 fig_size]);
+        set(figHandles(i), 'PaperSize', fig_size);
         
         if ext == 1
             print(figHandles(i), [figHandles(i).Name,'.pdf'],'-dpdf')
