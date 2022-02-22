@@ -44,7 +44,7 @@ Ts = mod_period/8;       % One period divided by 8
 
 % Simulink call
 ang_vel = ang_vel*pi/180  % angular velocity [rad/s] 
-output = sim('gyroControlDemod');
+output = sim('gyroControlDemodSim');
 data = output.simout.data;
 time = output.simout.time;
 phi_sagnac = output.phi_s.data;
