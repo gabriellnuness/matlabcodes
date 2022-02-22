@@ -35,7 +35,7 @@ phi_sagnac = 2*pi*L*D*ang_vel/(lambda*c) % [rad]
 I0 = 1;
  
 % Modulation parameters
-op = pi;             % operation point (absolute value) pi/2
+op = pi/2;             % operation point (absolute value) pi/2
 M = (op)/2;              % amplitude of modulation
                          % best SNR is 3*pi/4 <M< 7*pi/8
 f_mod = f_gyro/2;       % modulation frequency
@@ -63,8 +63,8 @@ phi_mod_fix = phi_mod_fix_1 - phi_mod_fix_2;
              
 % ------------------------------------------------------------------------        
 % Serrodyne wave modulation signal
-phi_mod_saw_1 = M*sawtooth(2*pi*f_mod*t);
-phi_mod_saw_2 = M*sawtooth(2*pi*f_mod*(t-tau));
+phi_mod_saw_1 = 2*M*sawtooth(2*pi*f_mod*t);
+phi_mod_saw_2 = 2*M*sawtooth(2*pi*f_mod*(t-tau));
 phi_mod_saw = phi_mod_saw_1 - phi_mod_saw_2;
 
 
@@ -73,7 +73,7 @@ I1 = (I0/2)*(1 + cos(phi_sagnac)); % without modulation
 I2 = (I0/2)*(1 + cos(phi_sagnac + phi_mod)); % analog modulation
 I3 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_dig)); % digital modulation
 I4 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_fix)); % static modulation
-I5 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_saw)); % static modulation
+I5 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_saw)); % serrodyne modulation
 
 %% Tiled plot design
 % figures sizes for 1x3  = [5 9]
@@ -168,52 +168,55 @@ set(tlo.Children,'XTick',[], 'YTick', [], 'box', 'off');
 
 %% Output interferometer signal
 
-
-
 figure('Units','centimeter','Position',[8 12 15 12],...
          'PaperPositionMode','auto')
         
     tlo = tiledlayout(5,1,'TileSpacing','none','Padding','none');
 
-    nexttile; plot(t,I4,'-k')
-%     legend('Sagnac phase with static modulation',...
-%         'fontsize',10,'location','southeast')
-    ylim([0 1.2]); xlim([0 t(end)])
-    ylabel({'Output';'w/ static';'modulation'},...
-        'interpreter','latex','fontsize',10)
+    nexttile; 
+    hold on
+    colororder({'k', 'k'})
+    plot(t,I4,'-')
+        ylim([0 1.2]); xlim([0 t(end)])
+        ylabel({'Output';'w/ static';'modulation'},...
+            'interpreter','latex','fontsize',10)    
+    yyaxis right
+    plot(t,phi_mod_fix,'--')
+        
+    nexttile; 
+    hold on
+    plot(t,ones(1,length(t))*I1,'-')
+        ylim([0 1.2]); xlim([0 t(end)])
+        ylabel({'Output w/o';'modulation'},...
+            'interpreter','latex','fontsize',10)
+
+    nexttile; 
+    hold on
+    plot(t,I2,'-k')
+        ylabel({'Output';'w/ analog';'modulation'},...
+            'interpreter','latex','fontsize',10) 
+    yyaxis right
+    plot(t,phi_mod,'--')
+
+    nexttile; 
+    hold on
+    plot(t,I3,'-k')
+        ylim([0 1.2]); xlim([0 t(end)])
+        ylabel({'Output';'w/ digital';'modulation'},...
+            'interpreter','latex','fontsize',10)
+    yyaxis right
+    plot(t,phi_mod_dig,'--')
+    
+    nexttile; 
+    hold on
+    plot(t,I5,'-k')
+        ylabel({'Output';'w/ Sawtooth';'modulation'},...
+            'interpreter','latex','fontsize',10)
+        xlabel('Time [s]','interpreter','latex','fontsize',10)  
+        ylim([0 1.2]); xlim([0 t(end)])
+    yyaxis right
+    plot(t,phi_mod_saw,'--')
    
-    
-    nexttile; plot(t,ones(1,length(t))*I1,'-k')
-%     legend('Sagnac phase',...
-%         'fontsize',10,'location','southeast')
-    ylim([0 1.2]); xlim([0 t(end)])
-    ylabel({'Output w/o';'modulation'},...
-        'interpreter','latex','fontsize',10)
-
-    nexttile; plot(t,I2,'-k')
-%     legend('Sagnac phase with analog modulation',...
-%         'fontsize',10,'location','southeast')
-    ylim([0 1.2]); xlim([0 t(end)])
-    ylabel({'Output';'w/ analog';'modulation'},...
-        'interpreter','latex','fontsize',10)
-    
-    nexttile; plot(t,I3,'-k')
-%     legend('Sagnac phase with digital modulation',...
-%         'fontsize',10,'location','southeast')
-    ylim([0 1.2]); xlim([0 t(end)])
-    ylabel({'Output';'w/ digital';'modulation'},...
-        'interpreter','latex','fontsize',10)
-      
-    nexttile; plot(t,I5,'-k')
-%     legend('Sagnac phase with digital modulation',...
-%         'fontsize',10,'location','southeast')
-    ylim([0 1.2]); xlim([0 t(end)])
-    ylabel({'Output';'w/ Sawtooth';'modulation'},...
-        'interpreter','latex','fontsize',10)
-    
-     xlabel('Time [s]','interpreter','latex','fontsize',10)
-
-       
 set(tlo.Children, 'box', 'off');    
  
 
