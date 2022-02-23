@@ -2,7 +2,7 @@
 % This script involke the simulink 'gyro2sim.slx' that simulates an open
 % loop optical fiber gyroscope (IFOG) with a square wave modualtion.
 % The demodulation method assumes the perfect 50:50 in the directional coupler.
-clear all
+clear
 close all
 clc
 
@@ -27,13 +27,13 @@ I0 = 1;
 
 % Constants needed in Simulink
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ang_vel_deg = 10;       % (1 to 16) [deg/s]           
+ang_vel_deg = 10;       % (1 to 16) [deg/s] % 45 seems to be the maximum value          
 ang_vel = ang_vel_deg*pi/180;  % angular velocity [deg/s]
 op = pi/2;                  % Operation point of modulation [rad]
 
 mod_vpi = 3.5;              % V_pi = Voltage to modulate Pi rad [V]
 step_time = tau/40;          % Simulation step [s]
-final_time = tau*200;        % Simulation final time [s]
+final_time = tau*1e4;        % Simulation final time [s]
 sf = 2*pi*L*D/(lambda*c);   % gyroscope scale factor [s]
 mod_sf = pi/mod_vpi;        % optical phase modulator scale factor [rad/V]
 mod_amp = (op/2)/mod_sf;    % Amplitude is half of operation point [V]
@@ -46,11 +46,13 @@ Ts = mod_period/8;       % One period divided by 8
 
 % Display frequencies and periods used in simulation
 fprintf('\ntau = %.2d s\n',tau)
-fprintf('IFOG Eigen frequency = %.2d Hz\n', f_mod)
 fprintf('Simulation frequency = %.2d Hz\n', 1/step_time)
-fprintf('Modulation frequency = %.2d Hz\n', mod_freq)
+fprintf('IFOG Eigen frequency = %.2d Hz\n', f_mod)
+fprintf('\nModulation frequency = %.2d Hz\n', mod_freq)
 fprintf('Demodulation rate = %.2d Hz\n', 1/Ts)
-fprintf('Angular velocity = %.2d rad/s or %.2d deg/s\n', ang_vel,ang_vel_deg)
+fprintf('Angular velocity = %.3f rad/s or %.2f deg/s\n', ang_vel,ang_vel_deg)
+fprintf('\nOutput data size = %.2s elements\n', final_time/step_time)
+fprintf('Final time = %.4f s\n', final_time)
 %%
 % Simulink call
 output = sim('gyroSakajiri2008Sim');
@@ -75,10 +77,10 @@ figure("Units","centimeters","Position",[0 1 20 20])
     subplot(3,1,1)
         plot(time, output.mod_signal.data/pi)
             ylabel('Modulation [\pi rad]')
-            ylim([-pi/2 pi/2])
+            ylim([-pi/4 pi/4])
     subplot(3,1,2)
         plot(time,data)
-            ylim([0 1])
+            ylim([-0.2 1.2])
             ylabel('Output [V]')
     subplot(3,1,3)
         hold on
