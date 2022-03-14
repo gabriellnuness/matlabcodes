@@ -40,7 +40,7 @@ X = [(v_m1').^2 (v_m2').^2 v_m1'.*v_m2' v_m1' v_m2'];
 % Y matrix
 Y = ones(length(t),1);
 % Matrix of the coefficients Q = [A,B,C,D,E]';
-Q = inv(X'*X)*(X')*Y;
+Q = (X'*X)\(X')*Y;
 % Calculated parameters
 alpha_fit = asin(Q(3)/(sqrt(4*Q(1)*Q(2))));
 r_fit = sqrt(Q(2)/Q(1));
