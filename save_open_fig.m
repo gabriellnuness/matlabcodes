@@ -12,7 +12,8 @@ function save_open_fig(path, fig_size, ext)
 % save_open_fig(path, fig_size, format)
     if ext == 5
         fprintf('Figures were NOT saved!\n')
-    return 
+        return 
+    end
 
     paperunits='centimeters';
     plot_path = [path,'\plots']
