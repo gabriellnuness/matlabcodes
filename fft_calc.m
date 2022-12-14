@@ -14,4 +14,5 @@ function [f, A] = fft_calc(t, V)
     A = P2(1:N/2+1);
     A(2:end-1) = 2*A(2:end-1);
     f = fs*(0:(N/2))/N;
+    
 end
