@@ -3,7 +3,7 @@
 % are in the same folder, with CSV extension. 
 % Therefore, there must not be any other csv file inside folder.
 
-save_figures_status = 5;
+save_figures_status = 3; % 3-png, 5-none
 
 set(groot,'defaultAxesTickLabelInterpreter','latex')
 set(groot,'defaultLegendInterpreter','latex')
