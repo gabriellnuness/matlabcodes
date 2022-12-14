@@ -1,5 +1,3 @@
-
-
 interf_sensitivity_linearization
 
 function interf_sensitivity_linearization
@@ -7,8 +5,10 @@ function interf_sensitivity_linearization
 % to linearized value in volts/rad around pi/2
 
     % calibration of the interferometer v = A+A*V*cos()
-    A = 5.275;  % A = 5.275;
-    V = 0.9507; % V = 0.807;
+    M = 8.2185; % maximum value
+    m = 1.7185; % minimum value
+    A = (M + m)/2;
+    V = (M - m)/(M + m);
 
     phi = 0:0.001:pi; % phase vector
     delta_phi = 0; % signal of interest

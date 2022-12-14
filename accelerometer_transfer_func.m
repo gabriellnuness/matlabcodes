@@ -9,12 +9,12 @@ close all
 clc
 
 %  Optical fiber accelerometer constants
-Y = 7*10^10; % Young modulus [n/m^2]
-L = 4.5*10^-2; % length [m]
-D = 125*10^-6; % diameter [m]
+Y = 7e10; % Young modulus [n/m^2]
+L = 4.5e-2; % length [m]
+D = 125e-6; % diameter [m]
 A = pi*(D/2)^2; % area [m^2]
 
-m = 20.23*10^-3 ; % mass [kg]
+m = 20.23e-3 ; % mass [kg]
 y = 1.521; % damping factor from Antune, 2009. [1/s]
 
 % Calculations
