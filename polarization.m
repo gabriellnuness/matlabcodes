@@ -132,8 +132,8 @@ y_e_n(i) = -sqrt(r^2 - x_e(i)^2);
 end
 He = plot3(x_e,y_e_p,z_e,'k-',x_e,y_e_n,z_e,'k-');
 set(He,'linewidth',0.7,'color','k');
-% Draw a bold circle about the prime meridian (2*theta = 0, 180)
 
+% Draw a bold circle about the prime meridian (2*theta = 0, 180)
 y_pm = (-r:.01:r);
 for i = 1:length(y_pm)
 x_pm(i) = 0;

@@ -35,7 +35,7 @@ phi_sagnac = 2*pi*L*D*ang_vel/(lambda*c) % [rad]
 I0 = 1;
  
 % Modulation parameters
-op = pi/2;             % operation point (absolute value) pi/2
+op = pi/1.5;             % operation point (absolute value) pi/2
 M = (op)/2;              % amplitude of modulation
                          % best SNR is 3*pi/4 <M< 7*pi/8
 f_mod = f_gyro/2;       % modulation frequency
@@ -49,24 +49,38 @@ phi_mod = phi_mod_1 - phi_mod_2;
         
 % ------------------------------------------------------------------------        
 % Digital modulation signal
+
+% % Ideal
 phi_mod_dig_1 = M*square(2*pi*f_mod/2*t);
 phi_mod_dig_2 = M*square(2*pi*f_mod/2*(t-tau));
 phi_mod_dig = phi_mod_dig_1 - phi_mod_dig_2;
 
+% % Non-ideal
+% phi_mod_dig_1 = conv(square(2*pi*f_mod*(t)), tripuls(2*pi*(4e5)*(t)));
+% phi_mod_dig_1 = phi_mod_dig_1(1:floor(length(phi_mod_dig_1)/2+1));
+% phi_mod_dig_1 = phi_mod_dig_1./max(phi_mod_dig_1);
+% phi_mod_dig_1 = M*phi_mod_dig_1;
+% 
+% phi_mod_dig_2 = conv(square(2*pi*f_mod*(t-tau)), tripuls(2*pi*(4e5)*(t-tau)));
+% phi_mod_dig_2 = phi_mod_dig_2(1:floor(length(phi_mod_dig_2)/2+1));
+% phi_mod_dig_2 = phi_mod_dig_2./max(phi_mod_dig_2);
+% phi_mod_dig_2 = M*phi_mod_dig_2;
+% 
+% phi_mod_dig = phi_mod_dig_1 - phi_mod_dig_2;
+
 % ------------------------------------------------------------------------
 % Fix modulation signal example
-    % heaviside function is a step function (x<0:0 , x=0:0.5, x>0:1)
+% heaviside function is a step function (x<0:0 , x=0:0.5, x>0:1)
 start = 2*tau;
 phi_mod_fix_1 = M*heaviside(t-start); 
 phi_mod_fix_2 = M*heaviside(t-start-tau);
 phi_mod_fix = phi_mod_fix_1 - phi_mod_fix_2;
-             
+
 % ------------------------------------------------------------------------        
 % Serrodyne wave modulation signal
 phi_mod_saw_1 = 2*M*sawtooth(2*pi*f_mod*t);
 phi_mod_saw_2 = 2*M*sawtooth(2*pi*f_mod*(t-tau));
 phi_mod_saw = phi_mod_saw_1 - phi_mod_saw_2;
-
 
 % Interference intensity
 I1 = (I0/2)*(1 + cos(phi_sagnac)); % without modulation
@@ -74,6 +88,26 @@ I2 = (I0/2)*(1 + cos(phi_sagnac + phi_mod)); % analog modulation
 I3 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_dig)); % digital modulation
 I4 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_fix)); % static modulation
 I5 = (I0/2)*(1 + cos(phi_sagnac + phi_mod_saw)); % serrodyne modulation
+
+%% Modulation outside proper frequency
+
+f = 0 : f_mod*1e-3 : 6*f_mod;
+tt = 1; % fixed time
+
+% sine wave
+phi_m_f   = M*sin(2*pi*f*tt);
+phi_m_f_2 = M*sin(2*pi*f*(tt - tau));
+
+% % square wave
+% phi_m_f = M*square(2*pi*f/2*(tt));
+% phi_m_f_2 = M*square(2*pi*f/2*(tt-tau));
+
+D_phi_m_f = phi_m_f - phi_m_f_2;
+
+figure
+plot(f/f_mod, D_phi_m_f/M)
+    xlabel('Eigen frequency (f_p)')
+    ylabel('\Delta\phi/\phi_m')
 
 %% Tiled plot design
 % figures sizes for 1x3  = [5 9]
@@ -295,5 +329,7 @@ figure('Units','centimeter','Position',[0 12 8 5],...
 % nexttile(4); hold on; plot(t,I4,'b','linestyle','--')
 
 
-
+%% FFT of output
+figure
+fft_plot(t,I2,[.3 .3 .3],0.1)
 

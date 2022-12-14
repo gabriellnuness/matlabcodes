@@ -1,4 +1,4 @@
-close all
+% close all
 clear all
 clc
 %% Setup the Import Options and import the data
@@ -13,6 +13,8 @@ opts.VariableNames = ["CurrentmA", "PowermW"];
 opts.VariableTypes = ["double", "double"];
 
 % Import the data
+dir = uigetdir();
+addpath(dir)
 data = readtable("D:\Users\Stinky\Google Drive\ITA\Data\2 - Laser diode characterization\laser diode characterization - current vs optical power.xlsx", opts, "UseExcel", false);
 
 %% Convert to output type
