@@ -7,5 +7,6 @@
 *.html
 *.xml
 *.tmw
-/slprj*
+slprj/
+resources/
 *.slxc
