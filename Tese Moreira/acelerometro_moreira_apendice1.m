@@ -2,7 +2,7 @@
 % accelerometer measuring element proportional to the chosen input. Ploting
 % a 3D model of the calculated response.
 
-% Limite de operaçao da grade de Bragg: 1500uS
+% Limite de operaï¿½ao da grade de Bragg: 1500uS
 
 set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
@@ -14,7 +14,7 @@ clc
 grava_relatorio = 1;
 desenha = 1;
 grava_figura = 0;
-arquivo = 'teste_gabriel.txt';
+arquivo = 'output_test.txt';
 massaprestrain = 70e-3;
 
 carrot = [230/256 126/256 34/256];
@@ -25,9 +25,9 @@ belize = [41/256 128/256 185/256];
 aresta = 8.2e-3; % => massa 11.696117g
 % Angulos de rotacao da massa sismica ao redor de seu centro de massa,
 % segundo suas coordenadas iniciais, em graus
-alfa = 0.00; % rotaçao ao redor do eixo x
-beta = 0.00; % rotaçao ao redor do eixo y originalmente = 10.00
-gama = 0.00; % rotaçao ao redor do eixo z % .04 maximo para menor cubo
+alfa = 0.00; % rotaï¿½ao ao redor do eixo x
+beta = 0.00; % rotaï¿½ao ao redor do eixo y originalmente = 10.00
+gama = 0.00; % rotaï¿½ao ao redor do eixo z % .04 maximo para menor cubo
 % deslocamento do centro da massa sismica (em uS)
 dx = 0; %250000
 dy = 0;
@@ -39,16 +39,15 @@ densidade =[al aco1005 latao cobre chumbo ouro] * 1e3; % densidades emkg/m3
 nomemat = ['aluminio';'aco 1005';'latao   ';'cobre   ';'chumbo  ';'ouro    '];
 al = 1; aco1005 = 2; latao = 3; cobre = 4; chumbo = 5; ouro = 6;
 format long
-home
 forca = [0 0 0];
 momentott = [0 0 0];
 for kkk = 1 : 1
     % dimensao de metade da aresta do cubo de massa sismica em metros
     a = aresta;
     buraco = .5e-3;%aresta - .5e-3;
-    parede_centro = a+14e-3; % distancia entre a parede de sustentaçao doconjunto e o centro da peca
+    parede_centro = a+14e-3; % distancia entre a parede de sustentaï¿½ao doconjunto e o centro da peca
     h = parede_centro - a;
-    d = (a - 1e-3-1e-3/2+125e-6/2); % posicionamento do ponto de colagem dafibra optica na aresta do cubo, considerando diâmetro do furo de 1mm,distancia da parede 1mm e diâmetro da fibra 125um;
+    d = (a - 1e-3-1e-3/2+125e-6/2); % posicionamento do ponto de colagem dafibra optica na aresta do cubo, considerando diï¿½metro do furo de 1mm,distancia da parede 1mm e diï¿½metro da fibra 125um;
     %d = .5e-3 - 125e-6/2;
     di = 125e-6; % diametro da fibra optica
     s = pi*(di/2)^2; % area da fibra optica (m2)
@@ -74,14 +73,14 @@ for kkk = 1 : 1
     cc = [cc ; ff];
     % Angulos de rotacao da massa sismica ao redor de seu centro de massa,
     % segundo suas coordenadas iniciais
-    alfa = alfa * pi/180; % rotaçao ao redor do eixo x
-    beta = beta * pi/180; % rotaçao ao redor do eixo y
-    gama = gama * pi/180; % rotaçao ao redor do eixo z % .08 maximo para menor cubo
+    alfa = alfa * pi/180; % rotaï¿½ao ao redor do eixo x
+    beta = beta * pi/180; % rotaï¿½ao ao redor do eixo y
+    gama = gama * pi/180; % rotaï¿½ao ao redor do eixo z % .08 maximo para menor cubo
     % deslocamento do centro da massa sismica
     dx = dx*h0*1e-6;
     dy = dy*h0*1e-6;
     dz = dz*h0*1e-6;
-    % transformaçao para coordenadas esfericas e rotaçao nos tres eixos
+    % transformaï¿½ao para coordenadas esfericas e rotaï¿½ao nos tres eixos
     for j = 1 : 3
             if j == 1
             a = 1; b = 2; c = 3; rotacao = gama;
@@ -260,12 +259,12 @@ if grava_relatorio == 1
     fprintf(fid,'Pre-strain da fibra optica (uS): %4.4f\n',strain0(1)*1e6);
     fprintf(fid,'Massa do cubo (g): %4.6f\n',massa*1e3);
     fprintf(fid,'Momento de inercia do cubo (g*mm^2): %4.6f\n\n',Itt*1e3);
-    fprintf(fid,'Rotaçoes impostas ao redor de x, y e z (graus): \n%4.6f%4.6f %4.6f\n\n',alfa*180/pi,beta*180/pi,gama*180/pi);
+    fprintf(fid,'Rotaï¿½oes impostas ao redor de x, y e z (graus): \n%4.6f%4.6f %4.6f\n\n',alfa*180/pi,beta*180/pi,gama*180/pi);
     fprintf(fid,'Translacoes impostas ao longo de x, y e z (um): \n%4.6f%4.6f %4.6f\n\n',1e6*dx,1e6*dy,1e6*dz);
     fprintf(fid,'Aceleracoes lineares estimadas (x, y, z) (m/s^2):\n %4.6f%4.6f %4.6f\n\n',forca'/massa);
     fprintf(fid,'Aceleracoes lineares estimadas (x, y, z) (G):\n %4.6f%4.6f %4.6f\n\n',forca'/massa/10);
     fprintf(fid,'Aceleracoes angulares estimadas, ao redor de x, y e z(rad/s^2):\n %4.6f %4.6f %4.6f\n\n',AcelAngular);
-    fprintf(fid,'Deformaçao normalizada (strain) de cada fibra (uS)\n');
+    fprintf(fid,'Deformaï¿½ao normalizada (strain) de cada fibra (uS)\n');
     for i = 1 : 4
         fprintf(fid,'Fibra %d: %4.6f\tFibra %d: %4.6f\tFibra %d:%4.6f\n',3*(i-1)+1,strain(3*(i-1)+1)*1e6,3*(i-1)+2,strain(3*(i-1)+2)*1e6,3*(i-1)+3,strain(3*(i-1)+3)*1e6);
     end

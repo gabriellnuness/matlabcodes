@@ -1,0 +1,39 @@
+Analise de deformacoes para acelerometro a fibra optica
+
+Aresta do cubo (mm): 16.4000
+Material do cubo: aluminio
+Distancia entre furos (mm): 13.5250
+Comprimento ativo de fibra (mm): 14.0000
+Massa equivalente ao pre-strain (g):70.0000
+Pre-strain da fibra optica (uS): 755.9224
+Massa do cubo (g): 11.696117
+Momento de inercia do cubo (g*mm^2): 0.000524
+
+Rotaçoes impostas ao redor de x, y e z (graus): 
+0.0000000.000000 0.000000
+
+Translacoes impostas ao longo de x, y e z (um): 
+0.0000000.000000 0.000000
+
+Aceleracoes lineares estimadas (x, y, z) (m/s^2):
+ -0.000000-0.000000 -0.000000
+
+Aceleracoes lineares estimadas (x, y, z) (G):
+ -0.000000-0.000000 -0.000000
+
+Aceleracoes angulares estimadas, ao redor de x, y e z(rad/s^2):
+ 0.000000 -0.000000 0.000000
+
+Deformaçao normalizada (strain) de cada fibra (uS)
+Fibra 1: 755.922378	Fibra 2: 755.922378	Fibra 3:755.922378
+Fibra 4: 755.922378	Fibra 5: 755.922378	Fibra 6:755.922378
+Fibra 7: 755.922378	Fibra 8: 755.922378	Fibra 9:755.922378
+Fibra 10: 755.922378	Fibra 11: 755.922378	Fibra 12:755.922378
+
+Strain diferencial para cada medida (uS):
+Devido a aceleracao no eixo x: 0.0000000.000000
+Devido a aceleracao no eixo y: 0.0000000.000000
+Devido a aceleracao no eixo z: 0.0000000.000000
+Devido a rotacaoao redor do eixo x: 0.0000000.000000
+Devido a rotacaoao redor do eixo y: 0.0000000.000000
+Devido a rotacaoao redor do eixo z: 0.0000000.000000
